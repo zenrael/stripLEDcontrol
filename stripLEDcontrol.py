@@ -41,6 +41,6 @@ if __name__ == '__main__':
     strip_right.begin()
 
     Blackout(strip_right)
-    SetSolid(Color(255,70,0), strip_right)
+    SetSolid(Color(30,0,255), strip_right)
 
     print('Press Ctrl-C to quit.')
