@@ -53,12 +53,12 @@ def main(options,args):
     for opt, arg in options:
         if opt == '-s':
             arg_list = arg.split(',')
-            vals = map(int, arg_list)
+            vals = list(map(int, arg_list))
             SetSolid(Color(vals[0],vals[1],vals[2]), strip_right)
             SetSolid(Color(vals[0],vals[1],vals[2]), strip_left)
         if opt == '-a':
             arg_list = arg.split(',')
-            vals = map(int, arg_list)
+            vals = list(map(int, arg_list))
             SetSolidAll(Color(vals[0],vals[1],vals[2]), strip_right, strip_left)
 
     #SetSolid(HPS_LAMP, strip_right)
