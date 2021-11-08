@@ -91,9 +91,11 @@ def main(options,args):
         if opt == '-p':
             SetSolidAll(presets[arg], strip_right, strip_left)
         if opt == '-P':
-            arg_list = arg.split(',')
-            vals = list(map(int, arg_list))
-            Pulse(Color(vals[0], vals[1], vals[2]), strip_right, 10)
+            arg_list = arg.split(':')
+            p_width = int(arg_list[1])
+            val_list = arg_list.split(',')
+            vals = list(map(int, val_list))
+            Pulse(Color(vals[0], vals[1], vals[2]), strip_right, p_width)
         if opt == '-s':
             arg_list = arg.split(',')
             vals = list(map(int, arg_list))
