@@ -42,12 +42,12 @@ def Pulse(color, strip):
     # First get the number of LED's in the strip
     led_num = strip.numPixels()
     # We know this is divided approx into 3
-    led_per_bar = led_num/3
+    led_per_bar = int(led_num/3)
     # Then pulse!
     for i in range(int(led_per_bar)):
         strip.setPixelColor(i, color)
-        #strip.setPixelColor(i+led_per_bar, color)
-        #strip.setPixelColor(i+2*led_per_bar, color)
+        strip.setPixelColor(i+led_per_bar, color)
+        strip.setPixelColor(i+2*led_per_bar, color)
         strip.show()
         time.sleep(50/1000.0)
 
