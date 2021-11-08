@@ -93,7 +93,7 @@ def main(options,args):
         if opt == '-P':
             arg_list = arg.split(':')
             p_width = int(arg_list[1])
-            val_list = arg_list.split(',')
+            val_list = arg_list[0].split(',')
             vals = list(map(int, val_list))
             Pulse(Color(vals[0], vals[1], vals[2]), strip_right, p_width)
         if opt == '-s':
