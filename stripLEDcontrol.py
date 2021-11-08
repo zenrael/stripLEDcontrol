@@ -65,6 +65,10 @@ def Pulse(color, strip, pulse_width):
         strip.setPixelColor(i+(2*led_per_bar), Color(0,0,0))
         strip.show()
         time.sleep(pulse_width/1000.0)
+    # There are 'end stragglers' this time...
+    for i in range(led_num - 3*led_per_bar):
+        strip.setPixelColor(i, Color(0,0,0))
+    strip.show()
 
 def Blackout(strip):
     for i in range(strip.numPixels()):
