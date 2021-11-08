@@ -54,7 +54,7 @@ def main(options,args):
         if opt == '-s':
             arg_list = arg.split(',')
             vals = map(int, arg_list)
-            SetSolid(Color(int(vals)), strip_right)
+            SetSolid(Color(vals), strip_right)
             SetSolid(Color(vals[0],vals[1],vals[2]), strip_left)
         if opt == '-a':
             vals = arg.split(',')
