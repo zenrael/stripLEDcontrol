@@ -36,6 +36,7 @@ def SetSolidAll(color, strip_1, strip_2):
         if i < strip_2.numPixels():
             strip_2.setPixelColor(i, color)
             strip_2.show()
+        time.sleep(50/1000.0)
 
 def Blackout(strip):
     for i in range(strip.numPixels()):
