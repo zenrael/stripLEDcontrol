@@ -1,4 +1,4 @@
-import time, argparse
+import time, argparse, sys
 from rpi_ws281x import *
 
 # RIGHT HAND SIDE IS STRIP 1
@@ -19,8 +19,8 @@ LEFT_LED_BRIGHTNESS = 255
 LEFT_LED_INVERT = False
 LEFT_LED_CHANNEL = 1
 
-PEGGY_PURPLE = (30,0,255)
-HPS_LAMP = (255,70,0)
+PEGGY_PURPLE = Color(30,0,255)
+HPS_LAMP = Color(255,70,0)
 
 def SetSolid(color, strip):
     for i in range(strip.numPixels()):
@@ -33,7 +33,7 @@ def Blackout(strip):
         strip.setPixelColor(i, Color(0,0,0))
         strip.show()
 
-if __name__ == '__main__':
+def main():
     strip_left = Adafruit_NeoPixel(LEFT_LED_COUNT, LEFT_LED_PIN, LEFT_LED_FREQ_HZ, LEFT_LED_DMA, LEFT_LED_INVERT, LEFT_LED_BRIGHTNESS, LEFT_LED_CHANNEL)
     strip_right = Adafruit_NeoPixel(RIGHT_LED_COUNT, RIGHT_LED_PIN, RIGHT_LED_FREQ_HZ, RIGHT_LED_DMA, RIGHT_LED_INVERT, RIGHT_LED_BRIGHTNESS, RIGHT_LED_CHANNEL)
 
@@ -41,6 +41,11 @@ if __name__ == '__main__':
     strip_right.begin()
 
     Blackout(strip_right)
-    SetSolid(Color(30,0,255), strip_right)
+    Blackout(strip_left)
+    SetSolid(HPS_LAMP, strip_right)
+    SetSolid(HPS_LAMP, strip_left)
 
     print('Press Ctrl-C to quit.')
+
+if __name__ == '__main__':
+    main()
