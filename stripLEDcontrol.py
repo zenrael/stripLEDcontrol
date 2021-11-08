@@ -38,7 +38,7 @@ def SetSolidAll(color, strip_1, strip_2):
             strip_2.show()
         time.sleep(50/1000.0)
 
-def Pulse(color, strip):
+def Pulse(color, strip, pulse_width):
     # First get the number of LED's in the strip
     led_num = strip.numPixels()
     # We know this is divided approx into 3
@@ -49,11 +49,22 @@ def Pulse(color, strip):
         strip.setPixelColor(2*led_per_bar-i, color)
         strip.setPixelColor(i+(2*led_per_bar), color)
         strip.show()
-        time.sleep(50/1000.0)
+        time.sleep(pulse_width/1000.0)
     # Quickly get the stragglers at the end...
     for i in range(int(3*led_per_bar), led_num, 1):
         strip.setPixelColor(i, color)
     strip.show()
+    # Now bring it back down with a lovely -ve range...
+    # First kill the stragglers...
+    for i in range(int(3*led_per_bar), led_num, 1):
+        strip.setPixelColor(i, Color(0,0,0))
+    strip.show()
+    for i in range(int(led_per_bar,0,-1)):
+        strip.setPixelColor(i, color)
+        strip.setPixelColor(2*led_per_bar-i, color)
+        strip.setPixelColor(i+(2*led_per_bar), color)
+        strip.show()
+        time.sleep(pulse_width/1000.0)
 
 def Blackout(strip):
     for i in range(strip.numPixels()):
@@ -78,7 +89,7 @@ def main(options,args):
         if opt == '-P':
             arg_list = arg.split(',')
             vals = list(map(int, arg_list))
-            Pulse(Color(vals[0], vals[1], vals[2]), strip_right)
+            Pulse(Color(vals[0], vals[1], vals[2]), strip_right, 10)
         if opt == '-s':
             arg_list = arg.split(',')
             vals = list(map(int, arg_list))
