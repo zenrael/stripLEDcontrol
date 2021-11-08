@@ -72,7 +72,7 @@ def main(options,args):
         if opt == '-p':
             SetSolidAll(presets[arg], strip_right, strip_left)
         if opt == '-P':
-            args_list = arg.split(',')
+            arg_list = arg.split(',')
             vals = list(map(int, arg_list))
             Pulse(Color(vals[0], vals[1], vals[2]), strip_right)
         if opt == '-s':
