@@ -38,12 +38,27 @@ def SetSolidAll(color, strip_1, strip_2):
             strip_2.show()
         time.sleep(50/1000.0)
 
+def Pulse(color, strip):
+    # First get the number of LED's in the strip
+    led_num = strip.numPixels()
+    # We know this is divided approx into 3
+    led_per_bar = led_num/3
+    # Then pulse!
+    for i in range(led_per_bar):
+        strip.setPixelColor(i, color)
+        strip.setPixelColor(i+led_per_bar, color)
+        strip.setPixelColor(i+2*led_per_bar, color)
+        strip.show()
+        time.sleep(50/1000.0)
+
 def Blackout(strip):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0,0,0))
         strip.show()
 
 def main(options,args):
+    print('Press Ctrl-C to quit.')
+
     strip_left = Adafruit_NeoPixel(LEFT_LED_COUNT, LEFT_LED_PIN, LEFT_LED_FREQ_HZ, LEFT_LED_DMA, LEFT_LED_INVERT, LEFT_LED_BRIGHTNESS, LEFT_LED_CHANNEL)
     strip_right = Adafruit_NeoPixel(RIGHT_LED_COUNT, RIGHT_LED_PIN, RIGHT_LED_FREQ_HZ, RIGHT_LED_DMA, RIGHT_LED_INVERT, RIGHT_LED_BRIGHTNESS, RIGHT_LED_CHANNEL)
 
@@ -56,22 +71,22 @@ def main(options,args):
     for opt, arg in options:
         if opt == '-p':
             SetSolidAll(presets[arg], strip_right, strip_left)
+        if opt == '-P':
+            args_list = arg.split(',')
+            vals = list(map(int, arg_list))
+            Pulse(Color(vals[0], vals[1], vals[2]), strip_right)
         if opt == '-s':
             arg_list = arg.split(',')
             vals = list(map(int, arg_list))
             SetSolidAll(Color(vals[0],vals[1],vals[2]), strip_right, strip_left)
 
-    #SetSolid(HPS_LAMP, strip_right)
-    #SetSolid(HPS_LAMP, strip_left)
-
-    print('Press Ctrl-C to quit.')
 
 if __name__ == '__main__':
     try:
-        options, args = getopt.getopt(sys.argv[1:], "s:p:")
+        options, args = getopt.getopt(sys.argv[1:], "s:p:P:")
     except getopt.GetoptError:
-        print('usage: stripLEDcontrol.py -s R,G,B'
-              '       stripLEDcontrol.py -p PRESET'
-              'PRESETS: PEGGY_PURPLE, HPS_LAMP')
+        print('usage: stripLEDcontrol.py -s R,G,B\n'
+              '       stripLEDcontrol.py -p PRESET\n'
+              'PRESETS: PEGGY_PURPLE, HPS_LAMP\n')
         sys.exit(2)
     main(options,args)
