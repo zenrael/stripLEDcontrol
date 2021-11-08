@@ -56,7 +56,7 @@ def main(options,args):
 
 if __name__ == '__main__':
     try:
-        options, args = getopt.getopt(argv, "s:")
+        options, args = getopt.getopt(sys.argv[1:], "s:")
     except getopt.GetoptError:
         print('usage: stripLEDcontrol.py -s <hex color value>')
         sys.exit(2)
