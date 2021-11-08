@@ -52,8 +52,8 @@ def main(options,args):
 
     for opt, arg in options:
         if opt == '-s':
-            print(arg)
-            SetSolid(Color(arg), strip_right)
+            vals = arg.split(',')
+            SetSolid(Color(vals), strip_right)
             SetSolid(Color(arg), strip_left)
         if opt == '-a':
             SetSolidAll(Color(arg), strip_right, strip_left)
