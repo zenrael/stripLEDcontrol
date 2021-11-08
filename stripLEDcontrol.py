@@ -30,9 +30,9 @@ def SetSolid(color, strip):
 
 def SetSolidAll(color, strip_1, strip_2):
     for i in range(max(strip_1.numPixels(), strip_2.numPixels())):
-        if i < max(strip_1.numPixels()):
+        if i < strip_1.numPixels():
             strip_1.setPixelColor(i, color)
-        if i < max(strip_2.numPixels()):
+        if i < strip_2.numPixels():
             strip_2.setPixelColor(i, color)
 
 def Blackout(strip):
