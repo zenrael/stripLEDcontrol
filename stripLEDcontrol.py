@@ -28,6 +28,13 @@ def SetSolid(color, strip):
         strip.show()
         time.sleep(50/1000.0)
 
+def SetSolidAll(color, strip_1, strip_2):
+    for i in range(max(strip_1.numPixels(), strip_2.numPixels())):
+        if i < max(strip_1.numPixels()):
+            strip_1.setPixelColor(i, color)
+        if i < max(strip_2.numPixels()):
+            strip_2.setPixelColor(i, color)
+
 def Blackout(strip):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0,0,0))
@@ -47,16 +54,17 @@ def main(options,args):
         if opt == '-s':
             SetSolid(Color(arg), strip_right)
             SetSolid(Color(arg), strip_left)
+        if opt == '-a':
+            SetSolidAll(Color(arg), strip_right, strip_left)
 
-
-    SetSolid(HPS_LAMP, strip_right)
-    SetSolid(HPS_LAMP, strip_left)
+    #SetSolid(HPS_LAMP, strip_right)
+    #SetSolid(HPS_LAMP, strip_left)
 
     print('Press Ctrl-C to quit.')
 
 if __name__ == '__main__':
     try:
-        options, args = getopt.getopt(sys.argv[1:], "s:")
+        options, args = getopt.getopt(sys.argv[1:], "s:a:")
     except getopt.GetoptError:
         print('usage: stripLEDcontrol.py -s <hex color value>')
         sys.exit(2)
