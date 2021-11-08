@@ -1,4 +1,4 @@
-import time, argparse, sys
+import time, getopt, sys
 from rpi_ws281x import *
 
 # RIGHT HAND SIDE IS STRIP 1
@@ -33,7 +33,7 @@ def Blackout(strip):
         strip.setPixelColor(i, Color(0,0,0))
         strip.show()
 
-def main():
+def main(options,args):
     strip_left = Adafruit_NeoPixel(LEFT_LED_COUNT, LEFT_LED_PIN, LEFT_LED_FREQ_HZ, LEFT_LED_DMA, LEFT_LED_INVERT, LEFT_LED_BRIGHTNESS, LEFT_LED_CHANNEL)
     strip_right = Adafruit_NeoPixel(RIGHT_LED_COUNT, RIGHT_LED_PIN, RIGHT_LED_FREQ_HZ, RIGHT_LED_DMA, RIGHT_LED_INVERT, RIGHT_LED_BRIGHTNESS, RIGHT_LED_CHANNEL)
 
@@ -42,10 +42,22 @@ def main():
 
     Blackout(strip_right)
     Blackout(strip_left)
+
+    for opt, arg in options:
+        if opt == '-s':
+            SetSolid(Color(arg), strip_right)
+            SetSolid(Color(arg), strip_left)
+
+
     SetSolid(HPS_LAMP, strip_right)
     SetSolid(HPS_LAMP, strip_left)
 
     print('Press Ctrl-C to quit.')
 
 if __name__ == '__main__':
-    main()
+    try:
+        options, args = getopt.getopt(argv, "s:")
+    except getopt.GetoptError:
+        print('usage: stripLEDcontrol.py -s <hex color value>')
+        sys.exit(2)
+    main(options,args)
