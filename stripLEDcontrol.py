@@ -19,8 +19,8 @@ LEFT_LED_BRIGHTNESS = 255
 LEFT_LED_INVERT = False
 LEFT_LED_CHANNEL = 1
 
-PEGGY_PURPLE = Color(30,0,255)
-HPS_LAMP = Color(255,70,0)
+presets = {'PEGGY_PURPLE': Color(30,0,255),
+            'HPS_LAMP': Color(255,70,0) }
 
 def SetSolid(color, strip):
     for i in range(strip.numPixels()):
@@ -54,12 +54,9 @@ def main(options,args):
     Blackout(strip_left)
 
     for opt, arg in options:
+        if opt == '-p':
+            SetSolidAll(presets[arg], strip_right, strip_left)
         if opt == '-s':
-            arg_list = arg.split(',')
-            vals = list(map(int, arg_list))
-            SetSolid(Color(vals[0],vals[1],vals[2]), strip_right)
-            SetSolid(Color(vals[0],vals[1],vals[2]), strip_left)
-        if opt == '-a':
             arg_list = arg.split(',')
             vals = list(map(int, arg_list))
             SetSolidAll(Color(vals[0],vals[1],vals[2]), strip_right, strip_left)
@@ -71,8 +68,10 @@ def main(options,args):
 
 if __name__ == '__main__':
     try:
-        options, args = getopt.getopt(sys.argv[1:], "s:a:")
+        options, args = getopt.getopt(sys.argv[1:], "s:p:")
     except getopt.GetoptError:
-        print('usage: stripLEDcontrol.py -s <hex color value>')
+        print('usage: stripLEDcontrol.py -s R,G,B'
+              '       stripLEDcontrol.py -p PRESET'
+              'PRESETS: PEGGY_PURPLE, HPS_LAMP')
         sys.exit(2)
     main(options,args)
