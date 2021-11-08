@@ -59,7 +59,7 @@ def Pulse(color, strip, pulse_width):
     for i in range(int(3*led_per_bar), led_num, 1):
         strip.setPixelColor(i, Color(0,0,0))
     strip.show()
-    for i in range(int(led_per_bar,0,-1)):
+    for i in range(int(led_per_bar),0,-1)):
         strip.setPixelColor(i, color)
         strip.setPixelColor(2*led_per_bar-i, color)
         strip.setPixelColor(i+(2*led_per_bar), color)
