@@ -50,6 +50,10 @@ def Pulse(color, strip):
         strip.setPixelColor(i+(2*led_per_bar), color)
         strip.show()
         time.sleep(50/1000.0)
+    # Quickly get the stragglers at the end...
+    for i in range(int(3*led_per_bar), led_num, 1):
+        strip.setPixelColor(i, color)
+    strip.show()
 
 def Blackout(strip):
     for i in range(strip.numPixels()):
